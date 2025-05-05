@@ -20,10 +20,9 @@ const Homepage = () => {
               className="absolute bg-[#bf9347]"
               style={{
                 width: `${Math.random() * 300}px`,
-                height: '1px',
+                height: '3px',
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.5 + 0.2,
                 transform: `rotate(${Math.random() * 360}deg)`,
               }}
             />
@@ -36,7 +35,7 @@ const Homepage = () => {
         {/* Logo Placeholder */}
         <div className="relative w-[40rem] mb-8">
           <img
-            src="/assets/images/nuseum-logo.jpg"
+            src="/assets/images/nuseum-logo.png"
             alt="The Nuseum Logo"
             className="w-full"
           />
@@ -54,10 +53,8 @@ const Homepage = () => {
 
         {/* Museum Navigation */}
         <div className="absolute bottom-8 w-full max-w-xl mx-auto">
-          <div className="flex justify-center space-x-8 text-xs text-[#212121] tracking-widest">
+          <div className="flex justify-center space-x-8 text-xs text-[#bf9347] tracking-widest">
             <a href="/about" className="opacity-70 hover:opacity-100 transition-opacity relative pb-1.5 hover:after:content-[''] hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-px hover:after:bg-[#bf9347]">ABOUT</a>
-            <a href="/exhibitions" className="opacity-70 hover:opacity-100 transition-opacity relative pb-1.5 hover:after:content-[''] hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-px hover:after:bg-[#bf9347]">EXHIBITIONS</a>
-            <a href="/collection" className="opacity-70 hover:opacity-100 transition-opacity relative pb-1.5 hover:after:content-[''] hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-px hover:after:bg-[#bf9347]">COLLECTION</a>
             <a href="/visit" className="opacity-70 hover:opacity-100 transition-opacity relative pb-1.5 hover:after:content-[''] hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:w-full hover:after:h-px hover:after:bg-[#bf9347]">VISIT</a>
           </div>
         </div>

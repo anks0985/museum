@@ -106,21 +106,21 @@ const MuseumCatalogueExplorer = () => {
   };
 
   return (
-    <div className="bg-[#fcf6eb] text-[#212121] overflow-x-hidden min-h-screen">
+    <div className="bg-[#fcf6eb] text-[#bf9347] overflow-x-hidden min-h-screen">
       {/* Header */}
-      <header className="py-8 border-b border-[#d1bc8a33]">
-        <div className="max-w-7xl mx-auto px-10">
+      <header className="py-8 bg-[#fcf6eb] border-b border-[#bf934733]">
+        <div className="max-w-[100rem] mx-auto px-10">
           <div className="flex justify-between items-center md:flex-row flex-col md:gap-0 gap-5">
-            <a href="#" className="text-[#212121] no-underline flex flex-col">
-              <div className="font-medium text-2xl tracking-wider">THE MUSEUM</div>
-              <div className="font-normal text-sm opacity-70 mt-0.5">THE SILENT HERITAGE</div>
+            <a href="/" className="no-underline flex flex-col">
+              <div className="font-medium text-2xl tracking-wider">THE NUSEUM</div>
+              <div className="font-normal text-sm opacity-70 mt-0.5">A MUSEUM WITHOUT WALLS</div>
             </a>
             <nav className="flex gap-10 md:gap-10 gap-2.5 overflow-x-auto pb-2.5">
-              <a href="#" className="font-light text-base no-underline text-[#212121] relative pb-1.5 transition-all duration-400 ease-out">Home</a>
-              <a href="#" className="font-normal text-base no-underline text-[#212121] relative pb-1.5 transition-all duration-400 ease-out after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#d1bc8a]">Catalogue</a>
-              <a href="#" className="font-light text-base no-underline text-[#212121] relative pb-1.5 transition-all duration-400 ease-out">Collections</a>
-              <a href="#" className="font-light text-base no-underline text-[#212121] relative pb-1.5 transition-all duration-400 ease-out">About</a>
-              <a href="#" className="font-light text-base no-underline text-[#212121] relative pb-1.5 transition-all duration-400 ease-out">Contact</a>
+              <a href="/" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Home</a>
+              <a href="/catalogue" className="font-normal text-base no-underline relative pb-1.5 transition-all duration-400 ease-out after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#bf9347]">Catalogue</a>
+              <a href="#" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Collections</a>
+              <a href="#" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">About</a>
+              <a href="#" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Contact</a>
             </nav>
           </div>
         </div>
@@ -128,15 +128,15 @@ const MuseumCatalogueExplorer = () => {
 
       {/* Main Section */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-10">
+        <div className="max-w-[100rem] mx-auto px-10">
           {/* Breadcrumb */}
           <div className="flex items-center mb-8 font-light text-sm">
             <a href="#" className="opacity-70 no-underline transition-all duration-400 ease-out">Home</a>
-            <span className="mx-2.5 text-[#d1bc8a]">›</span>
+            <span className="mx-2.5 text-[#bf9347]">›</span>
             <a href="#" className="opacity-70 no-underline transition-all duration-400 ease-out">Catalogue</a>
-            <span className="mx-2.5 text-[#d1bc8a]">›</span>
+            <span className="mx-2.5 text-[#bf9347]">›</span>
             <span className="opacity-70">{brands[activeBrandIndex].name}</span>
-            <span className="mx-2.5 text-[#d1bc8a]">›</span>
+            <span className="mx-2.5 text-[#bf9347]">›</span>
             <span className="font-normal opacity-100">{artists[activeArtistIndex].name}</span>
           </div>
 
@@ -150,13 +150,13 @@ const MuseumCatalogueExplorer = () => {
 
           {/* Brand Selection */}
           <div className="flex justify-between items-center mb-8">
-            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#d1bc8a]">Select Brand</h2>
+            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">Select Brand</h2>
           </div>
           <div className="flex gap-5 mb-16 overflow-x-auto pb-2.5">
             {brands.map((brand, index) => (
               <div
                 key={index}
-                className={`min-w-96 h-72 relative overflow-hidden border cursor-pointer transition-all duration-400 ease-out hover:transform hover:-translate-y-1 hover:shadow-md ${index === activeBrandIndex ? 'border-[#d1bc8a] after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-0.5 after:bg-[#d1bc8a]' : 'border-[#d1bc8a33]'}`}
+                className={`min-w-96 h-72 relative overflow-hidden border cursor-pointer transition-all duration-400 ease-out hover:transform hover:-translate-y-1 hover:shadow-md ${index === activeBrandIndex ? 'border-[#bf9347] after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-0.5 after:bg-[#bf9347]' : 'border-[#bf934733]'}`}
                 onClick={() => handleBrandClick(index)}
               >
                 <img src={brand.image} alt={brand.name} className="w-full h-full object-cover transition-all duration-400 ease-out hover:scale-105" />
@@ -169,16 +169,16 @@ const MuseumCatalogueExplorer = () => {
 
           {/* Artist Selection */}
           <div className="flex justify-between items-center mb-8">
-            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#d1bc8a]">Japanese Master Artists</h2>
+            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">Japanese Master Artists</h2>
             <div className="flex gap-4">
               <button
-                className={`w-10 h-10 flex items-center justify-center bg-transparent border border-[#d1bc8a4d] cursor-pointer transition-all duration-400 ease-out ${activeViewMode === 'grid' ? 'border-[#d1bc8a] bg-[#d1bc8a1a]' : ''}`}
+                className={`w-10 h-10 flex items-center justify-center bg-transparent border border-[#bf93474d] cursor-pointer transition-all duration-400 ease-out ${activeViewMode === 'grid' ? 'border-[#bf9347] bg-[#bf93471a]' : ''}`}
                 onClick={() => setActiveViewMode('grid')}
               >
                 ◈
               </button>
               <button
-                className={`w-10 h-10 flex items-center justify-center bg-transparent border border-[#d1bc8a4d] cursor-pointer transition-all duration-400 ease-out ${activeViewMode === 'list' ? 'border-[#d1bc8a] bg-[#d1bc8a1a]' : ''}`}
+                className={`w-10 h-10 flex items-center justify-center bg-transparent border border-[#bf93474d] cursor-pointer transition-all duration-400 ease-out ${activeViewMode === 'list' ? 'border-[#bf9347] bg-[#bf93471a]' : ''}`}
                 onClick={() => setActiveViewMode('list')}
               >
                 ☰
@@ -189,7 +189,7 @@ const MuseumCatalogueExplorer = () => {
             {artists.map((artist, index) => (
               <div
                 key={index}
-                className={`relative overflow-hidden cursor-pointer h-72 border transition-all duration-400 ease-out hover:transform hover:-translate-y-1 hover:shadow-md ${index === activeArtistIndex ? 'border-[#d1bc8a] after:content-[""] after:absolute after:top-0 after:right-0 after:w-0.5 after:h-full after:bg-[#d1bc8a]' : 'border-[#d1bc8a1a]'}`}
+                className={`relative overflow-hidden cursor-pointer h-72 border transition-all duration-400 ease-out hover:transform hover:-translate-y-1 hover:shadow-md ${index === activeArtistIndex ? 'border-[#bf9347] after:content-[""] after:absolute after:top-0 after:right-0 after:w-0.5 after:h-full after:bg-[#bf9347]' : 'border-[#bf93471a]'}`}
                 onClick={() => handleArtistClick(index)}
               >
                 <img src={artist.image} alt={artist.name} className="w-full h-full object-cover filter grayscale-[0.2] transition-all duration-700 ease-out hover:grayscale-0 hover:scale-105" />
@@ -205,7 +205,7 @@ const MuseumCatalogueExplorer = () => {
 
           {/* Artworks by Selected Artist */}
           <div className="flex justify-between items-center mb-8">
-            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#d1bc8a]">
+            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">
               Artworks by {artists[activeArtistIndex].name}
             </h2>
           </div>
@@ -213,13 +213,13 @@ const MuseumCatalogueExplorer = () => {
             {artworks.map((artwork, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden cursor-pointer aspect-video w-full border border-[#d1bc8a1a] transition-all duration-400 ease-out hover:transform hover:-translate-y-2 hover:shadow-lg"
+                className="relative overflow-hidden cursor-pointer aspect-video w-full border border-[#bf93471a] transition-all duration-400 ease-out hover:transform hover:-translate-y-2 hover:shadow-lg"
                 onClick={() => openModal(index)}
               >
                 <img src={artwork.src} alt={artwork.alt} className="w-full h-full object-cover object-center transition-all duration-700 ease-out hover:scale-105" />
                 <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-[#000000b3] to-transparent text-white transition-all duration-400 ease-out">
                   <h3 className="font-medium text-2xl mb-2.5">{artwork.title}</h3>
-                  <div className="w-10 h-px bg-[#d1bc8a] mb-2.5 transform scale-x-[0.7] origin-left transition-all duration-400 ease-out group-hover:scale-x-100"></div>
+                  <div className="w-10 h-px bg-[#bf9347] mb-2.5 transform scale-x-[0.7] origin-left transition-all duration-400 ease-out group-hover:scale-x-100"></div>
                   <p className="font-light text-sm leading-relaxed max-w-[80%] opacity-0 transform translate-y-2.5 transition-all duration-400 ease-out group-hover:opacity-100 group-hover:translate-y-0">
                     {artwork.description}
                   </p>
@@ -240,7 +240,7 @@ const MuseumCatalogueExplorer = () => {
           className="fixed top-0 left-0 w-full h-full bg-[#00000099] flex items-center justify-center z-50"
           onClick={(e) => e.target === e.currentTarget && closeModal()}
         >
-          <div className="bg-[#fffdf8] w-4/5 max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg p-5 relative">
+          <div className="bg-[#fcf6eb] w-4/5 max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg p-5 relative">
             <button
               className="absolute top-4 right-4 bg-transparent border-none text-2xl cursor-pointer text-[#212121]"
               onClick={closeModal}
@@ -274,7 +274,7 @@ const MuseumCatalogueExplorer = () => {
                     key={index}
                     src={artwork.src}
                     alt={artwork.alt}
-                    className={`w-24 h-14 object-cover cursor-pointer rounded ${index === currentArtworkIndex ? 'border-2 border-[#d1bc8a]' : 'border-2 border-transparent'}`}
+                    className={`w-24 h-14 object-cover cursor-pointer rounded ${index === currentArtworkIndex ? 'border-2 border-[#bf9347]' : 'border-2 border-transparent'}`}
                     onClick={() => setCurrentArtworkIndex(index)}
                   />
                 ))}
@@ -283,7 +283,7 @@ const MuseumCatalogueExplorer = () => {
               <p className="mb-2.5"><strong>Date:</strong> {artworks[currentArtworkIndex].date}</p>
               <p className="mb-2.5"><strong>Dimensions:</strong> {artworks[currentArtworkIndex].dimensions}</p>
               <button
-                className="bg-[#d1bc8a] text-[#fffdf8] border-none py-2.5 px-5 rounded cursor-pointer mr-4"
+                className="bg-[#bf9347] text-[#fcf6eb] border-none py-2.5 px-5 rounded cursor-pointer mr-4"
                 onClick={addToFavorites}
               >
                 ❤ Add to Favorites
@@ -292,7 +292,7 @@ const MuseumCatalogueExplorer = () => {
                 href={artworks[currentArtworkIndex].link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#212121] no-underline font-medium border-b border-[#212121]"
+                className="text-[#bf9347] no-underline font-medium border-b border-[#bf9347]"
               >
                 More Info
               </a>
