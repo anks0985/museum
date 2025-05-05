@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import Homepage from './Homepage';
-import Catalogue from './Catalogue';
+import Homepage from './components/Homepage';
+import Catalogue from './components/Catalogue';
 
 function App() {
   return (
