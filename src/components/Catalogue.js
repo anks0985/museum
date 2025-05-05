@@ -7,13 +7,14 @@ const MuseumCatalogueExplorer = () => {
   const [currentArtworkIndex, setCurrentArtworkIndex] = useState(0);
   const brands = [
     { name: "AM Brant", image: "assets/images/ambrant.jpg" },
-    { name: "Mughal Atelier", image: "assets/images/mughal.png" },
-    { name: "Flemish Collection", image: "assets/images/flemish.png" }
+    { name: "AM Brant 2", image: "assets/images/ambrant2.jpg" },
+    { name: "Mughal Atelier", image: "assets/images/mughal.png" }
+   
   ];
   const artists = [
     {
-      name: "Katsushika Hokusai",
-      image: "assets/images/katsushika.png",
+      name: "MF Husain",
+      image: "assets/images/husain.jpeg",
       years: "1760-1849",
       description: "Master of Ukiyo-e painting and woodblock printing"
     },
@@ -32,7 +33,7 @@ const MuseumCatalogueExplorer = () => {
   ];
   const artworks = [
     {
-      src: 'assets/images/greatwaves.png',
+      src: 'assets/images/hussain-1.jpg',
       alt: 'The Great Wave off Kanagawa',
       title: 'The Great Wave off Kanagawa',
       description: `First published in 1831 as part of the series "Thirty-six Views of Mount Fuji." This iconic woodblock print depicts a large rogue wave threatening boats off the coast of Kanagawa, with Mount Fuji visible in the background.`,
@@ -41,7 +42,7 @@ const MuseumCatalogueExplorer = () => {
       link: '#'
     },
     {
-      src: 'assets/images/finewind.png',
+      src: 'assets/images/akbar-1.jpg',
       alt: 'Fine Wind, Clear Morning',
       title: 'Fine Wind, Clear Morning',
       description: `Also known as "Red Fuji," this woodblock print from the series "Thirty-six Views of Mount Fuji" shows Mount Fuji tinged red by the early morning sun, displaying Hokusai's mastery of color gradation.`,
@@ -102,9 +103,9 @@ const MuseumCatalogueExplorer = () => {
             <nav className="flex gap-10 md:gap-10 gap-2.5 overflow-x-auto pb-2.5">
               <a href="/" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Home</a>
               <a href="/catalogue" className="font-normal text-base no-underline relative pb-1.5 transition-all duration-400 ease-out after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#bf9347]">Catalogue</a>
-              <a href="#" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Collections</a>
-              <a href="#" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">About</a>
-              <a href="#" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Contact</a>
+              <a href="/about" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Collections</a>
+              <a href="/" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">About</a>
+              <a href="/" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Contact</a>
             </nav>
           </div>
         </div>
@@ -133,18 +134,24 @@ const MuseumCatalogueExplorer = () => {
             {brands.map((brand, index) => (
               <div
                 key={index}
-                className={`min-w-96 h-72 relative overflow-hidden border cursor-pointer transition-all duration-400 ease-out hover:transform hover:-translate-y-1 hover:shadow-md ${index === activeBrandIndex ? 'border-[#bf9347] after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-0.5 after:bg-[#bf9347]' : 'border-[#bf934733]'}`}
+                className={`aspect-square min-w-96 relative overflow-hidden border cursor-pointer transition-all duration-400 ease-out hover:transform hover:-translate-y-1 hover:shadow-md ${index === activeBrandIndex ? 'border-[#bf9347] after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-0.5 after:bg-[#bf9347]' : 'border-[#bf934733]'}`}
                 onClick={() => handleBrandClick(index)}
               >
-                <img src={brand.image} alt={brand.name} className="w-full h-full object-cover transition-all duration-400 ease-out hover:scale-105" />
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#00000066] to-[#00000033] flex items-center justify-center text-white transition-all duration-400 ease-out">
-                  <h3 className="font-medium text-2xl text-center px-5 drop-shadow-md">{brand.name}</h3>
+                <div className="absolute inset-0">
+                  <img
+                    src={brand.image}
+                    alt={brand.name}
+                    className="w-full h-full object-cover object-center transition-all duration-400 ease-out hover:scale-105"
+                  />
+                </div>
+                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-[#000000b3] to-transparent text-white transition-all duration-400 ease-out">
+                  <h3 className="font-medium text-2xl mb-1">{brand.name}</h3>
                 </div>
               </div>
             ))}
           </div>
           <div className="flex justify-between items-center mb-8">
-            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">Japanese Master Artists</h2>
+            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">AM Brant Master Artists</h2>
             <div className="flex gap-4">
               <button
                 className={`w-10 h-10 flex items-center justify-center bg-transparent border border-[#bf93474d] cursor-pointer transition-all duration-400 ease-out ${activeViewMode === 'grid' ? 'border-[#bf9347] bg-[#bf93471a]' : ''}`}
@@ -169,7 +176,7 @@ const MuseumCatalogueExplorer = () => {
               >
                 <img src={artist.image} alt={artist.name} className="w-full h-full object-cover filter grayscale-[0.2] transition-all duration-700 ease-out hover:grayscale-0 hover:scale-105" />
                 <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-[#000000b3] to-transparent text-white transition-all duration-400 ease-out">
-                  <h3 className="font-medium text-2xl mb-2">{artist.name}</h3>
+                  <h3 className="font-medium text-2xl">{artist.name}</h3>
                   <p className="font-light text-sm opacity-0 transform translate-y-2.5 transition-all duration-400 ease-out group-hover:opacity-100 group-hover:translate-y-0">
                     {artist.years} | {artist.description}
                   </p>
