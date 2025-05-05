@@ -1,74 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, X, Heart, ExternalLink, Menu, Search } from 'lucide-react';
+import Header from './Header';
+import brandData from './data.json';
 const MuseumCatalogueExplorer = () => {
-  const [activeViewMode, setActiveViewMode] = useState('grid');
   const [activeBrandIndex, setActiveBrandIndex] = useState(0);
   const [activeArtistIndex, setActiveArtistIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentArtworkIndex, setCurrentArtworkIndex] = useState(0);
-  const brands = [
-    { name: "AM Brant", image: "assets/images/ambrant.jpg" },
-    { name: "AM Brant 2", image: "assets/images/ambrant2.jpg" },
-    { name: "Mughal Atelier", image: "assets/images/mughal.png" }
-   
-  ];
-  const artists = [
-    {
-      name: "MF Husain",
-      image: "assets/images/husain.jpeg",
-      years: "1760-1849",
-      description: "Master of Ukiyo-e painting and woodblock printing"
-    },
-    {
-      name: "Utagawa Hiroshige",
-      image: "assets/images/utagawa.png",
-      years: "1797-1858",
-      description: "Known for landscapes and natural scenes"
-    },
-    {
-      name: "Kitagawa Utamaro",
-      image: "assets/images/kitagawa.png",
-      years: "1753-1806",
-      description: "Celebrated for portraits of women"
-    }
-  ];
-  const artworks = [
-    {
-      src: 'assets/images/hussain-1.jpg',
-      alt: 'The Great Wave off Kanagawa',
-      title: 'The Great Wave off Kanagawa',
-      description: `First published in 1831 as part of the series "Thirty-six Views of Mount Fuji." This iconic woodblock print depicts a large rogue wave threatening boats off the coast of Kanagawa, with Mount Fuji visible in the background.`,
-      date: '1831',
-      dimensions: '25.7 x 37.9 cm',
-      link: '#'
-    },
-    {
-      src: 'assets/images/akbar-1.jpg',
-      alt: 'Fine Wind, Clear Morning',
-      title: 'Fine Wind, Clear Morning',
-      description: `Also known as "Red Fuji," this woodblock print from the series "Thirty-six Views of Mount Fuji" shows Mount Fuji tinged red by the early morning sun, displaying Hokusai's mastery of color gradation.`,
-      date: '1830-1832',
-      dimensions: '25.7 x 37.9 cm',
-      link: '#'
-    },
-    {
-      src: 'assets/images/waterfall.png',
-      alt: 'The Waterfall of Amida',
-      title: 'The Waterfall of Amida',
-      description: `From the series "A Tour of Waterfalls in Various Provinces," this print showcases Hokusai's skill in capturing the movement and power of falling water, with a beautiful vertical composition typical of his landscape work.`,
-      date: '1833',
-      dimensions: '26.5 x 38.1 cm',
-      link: '#'
-    },
-    {
-      src: 'assets/images/owari.png',
-      alt: 'Fuji View Field in Owari Province',
-      title: 'Fuji View Field in Owari Province',
-      description: `Another masterpiece from the "Thirty-six Views of Mount Fuji" series, showing farmers working in a field with Mount Fuji visible in the distance, demonstrating Hokusai's skill in depicting both human activity and natural landscapes.`,
-      date: '1831',
-      dimensions: '25.7 x 37.9 cm',
-      link: '#'
-    }
-  ];
+  const [loaded, setLoaded] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true);
+    }, 500);
+    const handleMouseMove = (e) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+  useEffect(() => {
+    setActiveArtistIndex(0);
+  }, [activeBrandIndex]);
+  const FloatingDot = ({ delay, size, top, left, opacity }) => {
+    return (
+      <div
+        className={`absolute rounded-full bg-[#bf9347] transition-all duration-1000 delay-${delay} ${loaded ? 'opacity-' + opacity : 'opacity-0'}`}
+        style={{
+          width: size,
+          height: size,
+          top: `${top}%`,
+          left: `${left}%`,
+          transform: loaded ? 'scale(1)' : 'scale(0)',
+        }}
+      />
+    );
+  };
   const handleBrandClick = (index) => {
     setActiveBrandIndex(index);
   };
@@ -83,196 +52,292 @@ const MuseumCatalogueExplorer = () => {
     setModalVisible(false);
   };
   const showPrevArtwork = () => {
+    const artworks = brandData[activeBrandIndex].artists[activeArtistIndex].artworks;
     setCurrentArtworkIndex((currentArtworkIndex - 1 + artworks.length) % artworks.length);
   };
   const showNextArtwork = () => {
+    const artworks = brandData[activeBrandIndex].artists[activeArtistIndex].artworks;
     setCurrentArtworkIndex((currentArtworkIndex + 1) % artworks.length);
   };
   const addToFavorites = () => {
-    alert(`Added "${artworks[currentArtworkIndex].title}" to favorites!`);
+    const artwork = brandData[activeBrandIndex].artists[activeArtistIndex].artworks[currentArtworkIndex];
+    alert(`Added "${artwork.title}" to favorites!`);
   };
+  const currentBrand = brandData[activeBrandIndex];
+  const currentArtists = currentBrand.artists;
+  const currentArtist = currentArtists[activeArtistIndex];
+  const currentArtworks = currentArtist.artworks;
   return (
-    <div className="bg-[#fcf6eb] text-[#bf9347] overflow-x-hidden min-h-screen">
-      <header className="py-8 bg-[#fcf6eb] border-b border-[#bf934733]">
+    <div className="relative bg-[#fcf6eb] text-[#212121] overflow-x-hidden min-h-screen">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <FloatingDot delay="300" size="6px" top={15} left={20} opacity="20" />
+        <FloatingDot delay="500" size="8px" top={35} left={85} opacity="15" />
+        <FloatingDot delay="700" size="4px" top={70} left={15} opacity="10" />
+        <FloatingDot delay="900" size="12px" top={80} left={75} opacity="5" />
+        <div className={`absolute top-0 left-0 w-full h-px bg-[#bf9347] origin-left transform rotate-30 opacity-5 transition-opacity duration-1000 ${loaded ? 'opacity-5' : 'opacity-0'}`} style={{ width: '200%' }}></div>
+        <div className={`absolute top-0 right-0 w-full h-px bg-[#bf9347] origin-right transform -rotate-15 opacity-5 transition-opacity duration-1000 ${loaded ? 'opacity-5' : 'opacity-0'}`} style={{ width: '200%' }}></div>
+        <div
+          className="absolute w-64 h-64 rounded-full opacity-10 pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle, rgba(191,147,71,0.1) 0%, rgba(191,147,71,0) 70%)',
+            transform: 'translate(-50%, -50%)',
+            left: cursorPosition.x,
+            top: cursorPosition.y,
+          }}
+        />
+      </div>
+      <Header activeTab={"catalogue"} />
+      <section className={`py-16 transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
         <div className="max-w-[100rem] mx-auto px-10">
-          <div className="flex justify-between items-center md:flex-row flex-col md:gap-0 gap-5">
-            <a href="/" className="no-underline flex flex-col">
-              <div className="font-medium text-2xl tracking-wider">THE NUSEUM</div>
-              <div className="font-normal text-sm opacity-70 mt-0.5">A MUSEUM WITHOUT WALLS</div>
-            </a>
-            <nav className="flex gap-10 md:gap-10 gap-2.5 overflow-x-auto pb-2.5">
-              <a href="/" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Home</a>
-              <a href="/catalogue" className="font-normal text-base no-underline relative pb-1.5 transition-all duration-400 ease-out after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#bf9347]">Catalogue</a>
-              <a href="/about" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Collections</a>
-              <a href="/" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">About</a>
-              <a href="/" className="font-light text-base no-underline relative pb-1.5 transition-all duration-400 ease-out">Contact</a>
-            </nav>
-          </div>
-        </div>
-      </header>
-      <section className="py-16">
-        <div className="max-w-[100rem] mx-auto px-10">
-          <div className="flex items-center mb-8 font-light text-sm">
-            <a href="#" className="opacity-70 no-underline transition-all duration-400 ease-out">Home</a>
+          <div className="flex items-center mb-12 font-light text-xs tracking-widest text-[#bf9347]">
+            <a href="/" className="opacity-70 hover:opacity-100 transition-all duration-300 relative pb-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-[#bf9347] hover:after:w-full after:transition-all after:duration-300">HOME</a>
             <span className="mx-2.5 text-[#bf9347]">›</span>
-            <a href="#" className="opacity-70 no-underline transition-all duration-400 ease-out">Catalogue</a>
+            <a href="#" className="opacity-70 hover:opacity-100 transition-all duration-300 relative pb-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-[#bf9347] hover:after:w-full after:transition-all after:duration-300">CATALOGUE</a>
             <span className="mx-2.5 text-[#bf9347]">›</span>
-            <span className="opacity-70">{brands[activeBrandIndex].name}</span>
+            <span className="opacity-70">{currentBrand.name}</span>
             <span className="mx-2.5 text-[#bf9347]">›</span>
-            <span className="font-normal opacity-100">{artists[activeArtistIndex].name}</span>
+            <span className="font-normal opacity-100">{currentArtist.name}</span>
           </div>
-          <div className="mb-16">
-            <h1 className="font-medium text-4xl mb-2.5">Catalogue Explorer</h1>
-            <p className="font-light text-base opacity-70 max-w-xl">
-              Embark on an immersive journey through our meticulously curated ecosystem of distinguished brands, where you’ll engage with visionary master artists and their unparalleled portfolios. Discover bespoke artworks that exemplify the pinnacle of human creativity and craftsmanship, embodying cultural heritage, artistic excellence, and transformative inspiration.
-            </p>
+          <div className="mb-16 relative">
+            <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-[#bf9347] opacity-60"></div>
+            <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-[#bf9347] opacity-60"></div>
+            <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-[#bf9347] opacity-60"></div>
+            <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-[#bf9347] opacity-60"></div>
+            <div className="p-8">
+              <h1 className="font-light text-4xl tracking-wider text-[#bf9347] mb-6 uppercase">Catalogue Explorer</h1>
+              <div className="w-20 h-px bg-[#bf9347] opacity-40 mb-6"></div>
+              <p className="font-light text-base text-[#bf9347] opacity-70 max-w-2xl">
+                Embark on an immersive journey through our meticulously curated ecosystem of distinguished brands, where you'll engage with visionary master artists and their unparalleled portfolios. Discover bespoke artworks that exemplify the pinnacle of human creativity and craftsmanship.
+              </p>
+            </div>
           </div>
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">Select Brand</h2>
+          <div className="mb-8 flex items-center">
+            <div className="w-1 h-16 bg-[#bf9347] opacity-30 mr-4"></div>
+            <h2 className="font-light text-3xl tracking-wide text-[#bf9347]">Select Brand</h2>
           </div>
-          <div className="flex gap-5 mb-16 overflow-x-auto pb-2.5">
-            {brands.map((brand, index) => (
+          <div className="flex gap-8 mb-20 overflow-x-auto pb-4">
+            {brandData.map((brand, index) => (
               <div
                 key={index}
-                className={`aspect-square min-w-96 relative overflow-hidden border cursor-pointer transition-all duration-400 ease-out hover:transform hover:-translate-y-1 hover:shadow-md ${index === activeBrandIndex ? 'border-[#bf9347] after:content-[""] after:absolute after:top-0 after:left-0 after:w-full after:h-0.5 after:bg-[#bf9347]' : 'border-[#bf934733]'}`}
+                className={`group aspect-square w-96 relative overflow-hidden cursor-pointer transition-all duration-500 ease-out ${index === activeBrandIndex
+                  ? 'border border-[#bf9347] shadow-md shadow-[#bf934733]'
+                  : 'border border-[#bf934720]'
+                  }`}
                 onClick={() => handleBrandClick(index)}
               >
-                <div className="absolute inset-0">
+                <div className="absolute inset-0 overflow-hidden">
                   <img
                     src={brand.image}
                     alt={brand.name}
-                    className="w-full h-full object-cover object-center transition-all duration-400 ease-out hover:scale-105"
+                    className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
                   />
                 </div>
-                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-[#000000b3] to-transparent text-white transition-all duration-400 ease-out">
-                  <h3 className="font-medium text-2xl mb-1">{brand.name}</h3>
+                <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-[#00000090] to-transparent text-white transition-all duration-500 ease-out">
+                  <div className="w-12 h-px bg-[#bf9347] mb-3 transform origin-left transition-all duration-500 ease-out group-hover:w-20"></div>
+                  <h3 className="font-light text-2xl tracking-wide mb-1">{brand.name}</h3>
                 </div>
+                {index === activeBrandIndex && (
+                  <div className="absolute top-0 left-0 w-full h-1 bg-[#bf9347]"></div>
+                )}
               </div>
             ))}
           </div>
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">AM Brant Master Artists</h2>
-            <div className="flex gap-4">
-              <button
-                className={`w-10 h-10 flex items-center justify-center bg-transparent border border-[#bf93474d] cursor-pointer transition-all duration-400 ease-out ${activeViewMode === 'grid' ? 'border-[#bf9347] bg-[#bf93471a]' : ''}`}
-                onClick={() => setActiveViewMode('grid')}
-              >
-                ◈
-              </button>
-              <button
-                className={`w-10 h-10 flex items-center justify-center bg-transparent border border-[#bf93474d] cursor-pointer transition-all duration-400 ease-out ${activeViewMode === 'list' ? 'border-[#bf9347] bg-[#bf93471a]' : ''}`}
-                onClick={() => setActiveViewMode('list')}
-              >
-                ☰
-              </button>
-            </div>
+          <div className="mb-8 flex items-center">
+            <div className="w-1 h-16 bg-[#bf9347] opacity-30 mr-4"></div>
+            <h2 className="font-light text-3xl tracking-wide text-[#bf9347]">{currentBrand.name} Master Artists</h2>
           </div>
-          <div className={`grid gap-8 mb-16 ${activeViewMode === 'grid' ? 'lg:grid-cols-3 md:grid-cols-2 grid-cols-1' : 'grid-cols-1'}`}>
-            {artists.map((artist, index) => (
+          <div className="grid gap-8 mb-20 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
+            {currentArtists.map((artist, index) => (
               <div
                 key={index}
-                className={`relative overflow-hidden cursor-pointer h-72 border transition-all duration-400 ease-out hover:transform hover:-translate-y-1 hover:shadow-md ${index === activeArtistIndex ? 'border-[#bf9347] after:content-[""] after:absolute after:top-0 after:right-0 after:w-0.5 after:h-full after:bg-[#bf9347]' : 'border-[#bf93471a]'}`}
+                className={`group aspect-square relative overflow-hidden cursor-pointer transition-all duration-500 ease-out ${index === activeArtistIndex
+                  ? 'border border-[#bf9347] shadow-md shadow-[#bf934733]'
+                  : 'border border-[#bf934720]'
+                  }`}
                 onClick={() => handleArtistClick(index)}
               >
-                <img src={artist.image} alt={artist.name} className="w-full h-full object-cover filter grayscale-[0.2] transition-all duration-700 ease-out hover:grayscale-0 hover:scale-105" />
-                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-[#000000b3] to-transparent text-white transition-all duration-400 ease-out">
-                  <h3 className="font-medium text-2xl">{artist.name}</h3>
-                  <p className="font-light text-sm opacity-0 transform translate-y-2.5 transition-all duration-400 ease-out group-hover:opacity-100 group-hover:translate-y-0">
+                <img
+                  src={artist.image}
+                  alt={artist.name}
+                  className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-[#00000090] to-transparent text-white transition-all duration-500 ease-out">
+                  <div className="w-12 h-px bg-[#bf9347] mb-3 transform origin-left transition-all duration-500 ease-out group-hover:w-20"></div>
+                  <h3 className="font-light text-2xl tracking-wide mb-2">{artist.name}</h3>
+                  <p className="font-light text-sm opacity-0 transform translate-y-4 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:translate-y-0">
                     {artist.years} | {artist.description}
                   </p>
                 </div>
+                {index === activeArtistIndex && (
+                  <div className="absolute top-0 left-0 w-full h-1 bg-[#bf9347]"></div>
+                )}
               </div>
             ))}
           </div>
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">
-              Artworks by {artists[activeArtistIndex].name}
+          <div className="mb-8 flex items-center">
+            <div className="w-1 h-16 bg-[#bf9347] opacity-30 mr-4"></div>
+            <h2 className="font-light text-3xl tracking-wide text-[#bf9347]">
+              Artworks by {currentArtist.name}
             </h2>
           </div>
-          <div className="grid xl:grid-cols-2 grid-cols-1 gap-10">
-            {artworks.map((artwork, index) => (
+          <div className="flex flex-wrap mb-16">
+            {currentArtworks.map((artwork, index) => (
               <div
                 key={index}
-                className="relative overflow-hidden cursor-pointer aspect-video w-full border border-[#bf93471a] transition-all duration-400 ease-out hover:transform hover:-translate-y-2 hover:shadow-lg"
+                className="group relative cursor-pointer border border-[#bf934720] transition-all duration-500 ease-out hover:shadow-lg hover:translate-y-[-8px] overflow-hidden m-2"
                 onClick={() => openModal(index)}
+                style={{ height: '400px' }}
               >
-                <img src={artwork.src} alt={artwork.alt} className="w-full h-full object-cover object-center transition-all duration-700 ease-out hover:scale-105" />
-                <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-[#000000b3] to-transparent text-white transition-all duration-400 ease-out">
-                  <h3 className="font-medium text-2xl mb-2.5">{artwork.title}</h3>
-                  <div className="w-10 h-px bg-[#bf9347] mb-2.5 transform scale-x-[0.7] origin-left transition-all duration-400 ease-out group-hover:scale-x-100"></div>
-                  <p className="font-light text-sm leading-relaxed max-w-[80%] opacity-0 transform translate-y-2.5 transition-all duration-400 ease-out group-hover:opacity-100 group-hover:translate-y-0">
-                    {artwork.description}
+                <img
+                  src={artwork.src}
+                  alt={artwork.alt}
+                  className="h-full w-auto transition-all duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-[#00000030] opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out"></div>
+                <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-[#00000090] to-transparent text-white transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
+                  <div className="w-12 h-px bg-[#bf9347] mb-3 transform origin-left scale-x-75 transition-all duration-500 ease-out group-hover:scale-x-100"></div>
+                  <h3 className="font-light text-2xl tracking-wide mb-2">{artwork.title}</h3>
+                  <p className="font-light text-sm leading-relaxed max-w-[90%] opacity-0 transform translate-y-4 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:translate-y-0">
+                    {artwork.date} | {artwork.dimensions}
                   </p>
-                  <button className="absolute bottom-8 right-8 py-2.5 px-5 bg-[#ffffffe6] border-none font-light text-sm text-[#212121] cursor-pointer opacity-0 transform translate-y-2.5 transition-all duration-400 ease-out group-hover:opacity-100 group-hover:translate-y-0">
-                    View Details
-                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+      {/* Artwork Detail Modal */}
       {modalVisible && (
         <div
-          className="fixed top-0 left-0 w-full h-full bg-[#00000099] flex items-center justify-center z-50"
+          className="fixed inset-0 z-50 bg-[#000000cc] backdrop-blur-sm flex items-center justify-center p-4"
           onClick={(e) => e.target === e.currentTarget && closeModal()}
         >
-          <div className="bg-[#fcf6eb] w-4/5 max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg p-5 relative">
+          <div className="bg-[#fcf6eb] max-w-6xl w-full max-h-[90vh] overflow-auto rounded-lg shadow-2xl relative">
             <button
-              className="absolute top-4 right-4 bg-transparent border-none text-2xl cursor-pointer text-[#212121]"
+              className="absolute top-4 right-4 z-10 text-[#bf9347] hover:text-[#212121] 
+                transition-colors duration-300 bg-[#fcf6eb] rounded-full p-2 hover:bg-[#bf9347]/10"
               onClick={closeModal}
             >
-              &times;
+              <X size={20} />
             </button>
-            <div className="flex justify-between items-center mb-4">
-              <button
-                className="bg-transparent border-none text-lg cursor-pointer text-[#212121] py-1.5 px-2.5"
-                onClick={showPrevArtwork}
-              >
-                ‹ Prev
-              </button>
-              <h2>{artworks[currentArtworkIndex].title}</h2>
-              <button
-                className="bg-transparent border-none text-lg cursor-pointer text-[#212121] py-1.5 px-2.5"
-                onClick={showNextArtwork}
-              >
-                Next ›
-              </button>
-            </div>
-            <div>
-              <img
-                src={artworks[currentArtworkIndex].src}
-                alt={artworks[currentArtworkIndex].alt}
-                className="w-full h-auto rounded"
-              />
-              <div className="flex gap-2.5 my-2.5 overflow-x-auto">
-                {artworks.map((artwork, index) => (
-                  <img
-                    key={index}
-                    src={artwork.src}
-                    alt={artwork.alt}
-                    className={`w-24 h-14 object-cover cursor-pointer rounded ${index === currentArtworkIndex ? 'border-2 border-[#bf9347]' : 'border-2 border-transparent'}`}
-                    onClick={() => setCurrentArtworkIndex(index)}
-                  />
-                ))}
+
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              {/* Artwork Image */}
+              <div className="relative">
+                <img
+                  src={currentArtworks[currentArtworkIndex].src}
+                  alt={currentArtworks[currentArtworkIndex].alt}
+                  className="h-[70vh] max-w-full object-contain mx-auto"
+                />
+                <div className="absolute bottom-4 inset-x-4 flex justify-between">
+                  <button
+                    className="bg-[#fcf6eb]/90 hover:bg-[#fcf6eb] rounded-full p-2 text-[#bf9347] 
+                      transition-all duration-300 hover:shadow-lg"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showPrevArtwork();
+                    }}
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    className="bg-[#fcf6eb]/90 hover:bg-[#fcf6eb] rounded-full p-2 text-[#bf9347] 
+                      transition-all duration-300 hover:shadow-lg"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      showNextArtwork();
+                    }}
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
               </div>
-              <p className="mb-2.5">{artworks[currentArtworkIndex].description}</p>
-              <p className="mb-2.5"><strong>Date:</strong> {artworks[currentArtworkIndex].date}</p>
-              <p className="mb-2.5"><strong>Dimensions:</strong> {artworks[currentArtworkIndex].dimensions}</p>
-              <button
-                className="bg-[#bf9347] text-[#fcf6eb] border-none py-2.5 px-5 rounded cursor-pointer mr-4"
-                onClick={addToFavorites}
-              >
-                ❤ Add to Favorites
-              </button>
-              <a
-                href={artworks[currentArtworkIndex].link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#bf9347] no-underline font-medium border-b border-[#bf9347]"
-              >
-                More Info
-              </a>
+
+              {/* Artwork Details */}
+              <div className="p-8">
+                <h2 className="font-light text-3xl tracking-wide text-[#bf9347] mb-2">
+                  {currentArtworks[currentArtworkIndex].title}
+                </h2>
+                <p className="text-[#bf9347]/70 text-sm mb-6">
+                  {currentArtworks[currentArtworkIndex].date} • {currentArtist.name}
+                </p>
+
+                <div className="w-12 h-px bg-[#bf9347]/40 mb-6"></div>
+
+                <p className="mb-8 font-light leading-relaxed text-[#212121]">
+                  {currentArtworks[currentArtworkIndex].description}
+                </p>
+
+                <div className="mb-8 space-y-3 text-sm">
+                  <div className="flex">
+                    <span className="w-28 font-medium text-[#bf9347]">Artist</span>
+                    <span className="font-light">{currentArtist.name}</span>
+                  </div>
+                  <div className="flex">
+                    <span className="w-28 font-medium text-[#bf9347]">Period</span>
+                    <span className="font-light">{currentBrand.name}</span>
+                  </div>
+                  <div className="flex">
+                    <span className="w-28 font-medium text-[#bf9347]">Date</span>
+                    <span className="font-light">{currentArtworks[currentArtworkIndex].date}</span>
+                  </div>
+                  <div className="flex">
+                    <span className="w-28 font-medium text-[#bf9347]">Dimensions</span>
+                    <span className="font-light">{currentArtworks[currentArtworkIndex].dimensions}</span>
+                  </div>
+                </div>
+
+                <div className="flex space-x-4">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToFavorites();
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 bg-[#bf9347] text-white rounded-md
+                      hover:bg-[#bf9347]/90 transition-colors duration-300"
+                  >
+                    <Heart size={16} />
+                    <span className="text-sm">Add to Favorites</span>
+                  </button>
+
+                  <a
+                    href={currentArtworks[currentArtworkIndex].link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 border border-[#bf9347] text-[#bf9347] rounded-md
+                      hover:bg-[#bf9347]/10 transition-colors duration-300"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <ExternalLink size={16} />
+                    <span className="text-sm">View Details</span>
+                  </a>
+                </div>
+
+                {/* Thumbnail Navigation */}
+                {currentArtworks.length > 1 && (
+                  <div className="mt-8">
+                    <h3 className="text-sm font-medium text-[#bf9347] mb-3">More Works</h3>
+                    <div className="flex gap-2 overflow-x-auto pb-2">
+                      {currentArtworks.map((artwork, index) => (
+                        <img
+                          key={index}
+                          src={artwork.src}
+                          alt={artwork.alt}
+                          className={`w-16 h-16 object-cover rounded-md cursor-pointer transition-all duration-300 
+                            ${index === currentArtworkIndex
+                              ? 'ring-2 ring-[#bf9347]'
+                              : 'ring-1 ring-[#bf9347]/20 opacity-60 hover:opacity-100'
+                            }`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentArtworkIndex(index);
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
