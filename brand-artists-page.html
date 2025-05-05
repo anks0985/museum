@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Museum | The Silent Heritage - Japanese Masters</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;1,200&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --ivory: #fffdf8;
+            --charcoal: #212121;
+            --gold: #d1bc8a;
+            --emerald: #00583b;
+            --transition-slow: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-normal: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        body {
+            background-color: var(--ivory);
+            font-family: 'Nunito Sans', sans-serif;
+            color: var(--charcoal);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+        }
+        
+        /* Header */
+        header {
+            padding: 30px 0;
+            border-bottom: 1px solid rgba(209, 188, 138, 0.2);
+            position: relative;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-link {
+            text-decoration: none;
+            color: var(--charcoal);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .logo-main {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: var(--charcoal);
+        }
+        
+        .logo-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: var(--charcoal);
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+        
+        .navigation {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .nav-item {
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            text-decoration: none;
+            color: var(--charcoal);
+            position: relative;
+            padding-bottom: 5px;
+            transition: var(--transition-normal);
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--gold);
+            transition: var(--transition-normal);
+        }
+        
+        .nav-item:hover {
+            color: var(--charcoal);
+        }
+        
+        .nav-item:hover::after, 
+        .nav-item.active::after {
+            width: 100%;
+        }
+        
+        .nav-item.active {
+            font-weight: 400;
+        }
+        
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 300;
+            font-size: 14px;
+        }
+        
+        .breadcrumb-item {
+            color: var(--charcoal);
+            opacity: 0.7;
+            text-decoration: none;
+            transition: var(--transition-normal);
+        }
+        
+        .breadcrumb-item:hover {
+            opacity: 1;
+            color: var(--charcoal);
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 10px;
+            color: var(--gold);
+        }
+        
+        .breadcrumb-item.active {
+            opacity: 1;
+            font-weight: 400;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 40vh;
+            overflow: hidden;
+            margin-bottom: 60px;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.85);
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+            color: white;
+        }
+        
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 48px;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .hero-details {
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 300;
+            font-size: 18px;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+        
+        /* Brand Description */
+        .brand-description {
+            margin-bottom: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .description-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 32px;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 1px;
+            background-color: var(--gold);
+        }
+        
+        .description-text {
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .brand-image {
+            width: 100%;
+            height: auto;
+            border: 10px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Featured Artists */
+        .featured-artists {
+            margin-bottom: 60px;
+        }
+        
+        .featured-title {
+            margin-bottom: 50px;
+        }
+        
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+        
+        .artist-card {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(209, 188, 138, 0.1);
+            transition: var(--transition-normal);
+            height: 450px;
+        }
+        
+        .artist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .artist-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+            filter: grayscale(30%);
+        }
+        
+        .artist-card:hover .artist-image {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+        
+        .artist-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+            color: white;
+            transition: var(--transition-normal);
+        }
+        
+        .artist-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 28px;
+            margin-bottom: 10px;
+            transition: var(--transition-normal);
+        }
+        
+        .artist-card:hover .artist-name {
+            transform: translateY(-5px);
+        }
+        
+        .artist-divider {
+            width: 40px;
+            height: 1px;
+            background-color: var(--gold);
+            margin-bottom: 15px;
+            transform: scaleX(0.7);
+            transform-origin: left;
+            transition: var(--transition-normal);
+        }
+        
+        .artist-card:hover .artist-divider {
+            transform: scaleX(1);
+        }
+        
+        .artist-period {
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .artist-bio {
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 300;
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition-normal);
+            max-height: 0;
+            overflow: hidden;
+        }
+        
+        .artist-card:hover .artist-bio {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 200px;
+            margin-bottom: 15px;
+        }
+        
+        .artist-button {
+            display: inline-block;
+            padding: 8px 20px;
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 14px;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition-normal);
+        }
+        
+        .artist-card:hover .artist-button {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .artist-button:hover {
+            background: white;
+            color: var(--charcoal);
+        }
+        
+        /* Additional Artists Section */
+        .additional-artists {
+            margin-bottom: 60px;
+        }
+        
+        .additional-title {
+            margin-bottom: 50px;
+        }
+        
+        .additional-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .additional-card {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid rgba(209, 188, 138, 0.1);
+            transition: var(--transition-normal);
+            height: 300px;
+        }
+        
+        .additional-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .additional-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+            filter: grayscale(50%);
+        }
+        
+        .additional-card:hover .additional-image {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+        
+        .additional-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            color: white;
+            transition: var(--transition-normal);
+        }
+        
+        .additional-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 20px;
+            margin-bottom: 8px;
+            transition: var(--transition-normal);
+        }
+        
+        .additional-card:hover .additional-name {
+            transform: translateY(-5px);
+        }
+        
+        .additional-period {
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 300;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition-normal);
+        }
+        
+        .additional-card:hover .additional-period {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Collection Highlights */
+        .collection-highlights {
+            margin-bottom: 80px;
+        }
+        
+        .highlights-title {
+            margin-bottom: 50px;
+        }
+        
+        .highlights-slider {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) transparent;
+        }
+        
+        .highlights-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .highlights-slider::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .highlights-slider::-webkit-scrollbar-thumb {
+            background-color: var(--gold);
+            border-radius: 3px;
+        }
+        
+        .highlight-card {
+            min-width: 300px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-normal);
+        }
+        
+        .highlight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .highlight-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            transition: var(--transition-slow);
+        }
+        
+        .highlight-card:hover .highlight-image {
+            transform: scale(1.05);
+        }
+        
+        .highlight-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            color: white;
+            transition: var(--transition-normal);
+        }
+        
+        .highlight-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            font-size: 18px;
+            margin-bottom: 5px;
+            transition: var(--transition-normal);
+        }
+        
+        .highlight-card:hover .highlight-title {
+            transform: translateY(-5px);
+        }
+        
+        .highlight-artist {
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 300;
+            font-size: 14px;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: var(--transition-normal);
+        }
+        
+        .highlight-card:hover .highlight-artist {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Advisory Panel */
+        .advisory-panel {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            z-index: 100;
+        }
+        
+        .advisory-button {
+            background: var(--ivory);
+            border: 1px solid var(--gold);
+            color: var(--charcoal);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            letter-spacing: 1px;
+            padding: 15px 30px;
+            cursor: pointer;
+            transition: var(--transition-normal);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .advisory-button:hover {
+            background-color: var(--gold);
+            color: var(--ivory);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .brand-description {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .artists-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .additional-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .navigation {
+                width: 100%;
+                justify-content: space-between;
+                gap: 10px;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .hero-section {
+                height: 30vh;
+            }
+            
+            .hero-overlay {
+                padding: 20px;
+            }
+            
+            .hero-title {
+                font-size: 32px;
+            }
+            
+            .hero-details {
+                font-size: 16px;
+            }
+            
+            .artists-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .additional-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .advisory-panel {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .advisory-button {
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="#" class="logo-link">
+                        <div class="logo-main">THE MUSEUM</div>
+                        <div class="logo-sub">THE SILENT HERITAGE</div>
+                    </a>
+                </div>
+                
+                <nav class="navigation">
+                    <a href="#" class="nav-item">Home</a>
+                    <a href="#" class="nav-item active">Catalogue</a>
+                    <a href="#" class="nav-item">Collections</a>
+                    <a href="#" class="nav-item">About</a>
+                    <a href="#" class="nav-item">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb">
+                <a href="#" class="breadcrumb-item">Home</a>
+                <span class="breadcrumb-separator">›</span>
+                <a href="#" class="breadcrumb-item">Catalogue</a>
+                <span class="breadcrumb-separator">›</span>
+                <span class="breadcrumb-item active">Japanese Masters</span>
+            </div>
+            
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <img src="https://www.artic.edu/iiif/2/c0f24566-d1b6-4f43-673e-e7612a388186/full/1686,/0/default.jpg" alt="Japanese Masters Banner" class="hero-image">
+                <div class="hero-overlay">
+                    <h1 class="hero-title">Japanese Masters</h1>
+                    <p class="hero-details">Explore the extraordinary legacy of Japan's ukiyo-e movement through our curated collection of prints and paintings by the most influential artists of the Edo period, whose works continue to inspire and captivate audiences worldwide.</p>
+                </div>
+            </section>
+            
+            <!-- Brand Description -->
+            <section class="brand-description">
+                <div class="description-content">
+                    <h2 class="section-title">About the Collection</h2>
+                    <p class="description-text">
+                        The Japanese Masters collection represents the pinnacle of ukiyo-e art from the Edo period (1603-1868), a golden age of Japanese printmaking. Ukiyo-e, which translates to "pictures of the floating world," depicted the transient pleasures and beauty of everyday life in Japan.
+                    </p>
+                    <p class="description-text">
+                        These master artists revolutionized woodblock printing techniques, creating works characterized by bold compositions, vibrant colors, and meticulous attention to detail. Their subjects ranged from serene landscapes and dramatic natural phenomena to intimate portraits and scenes from literature and theater.
+                    </p>
+                    <p class="description-text">
+                        When Japan opened to Western trade in the 1850s, these prints flowed into Europe, profoundly influencing Impressionist and Post-Impressionist movements. The flattened perspective, asymmetrical compositions, and emphasis on natural forms found in ukiyo-e became integral to the development of modern Western art.
+                    </p>
+                </div>
+                <img src="https://ukiyo-e.org/image/mfa/sc232036.jpg" alt="Japanese Woodblock Print Example" class="brand-image">
+            </section>
+            
+            <!-- Featured Artists -->
+            <section class="featured-artists">
+                <h2 class="section-title featured-title">Featured Artists</h2>
+                <div class="artists-grid">
+                    <!-- Artist 1 -->
+                    <div class="artist-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Hokusai_self-portrait.jpg" alt="Katsushika Hokusai" class="artist-image">
+                        <div class="artist-info">
+                            <h3 class="artist-name">Katsushika Hokusai</h3>
+                            <div class="artist-divider"></div>
+                            <p class="artist-period">1760-1849</p>
+                            <p class="artist-bio">
+                                The creator of the iconic "Great Wave off Kanagawa," Hokusai was a prolific artist who produced an estimated 30,000 works during his lifetime. His series "Thirty-six Views of Mount Fuji" revolutionized landscape art and had a profound influence on Western Impressionism.
+                            </p>
+                            <a href="#" class="artist-button">Explore Artist</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Artist 2 -->
+                    <div class="artist-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Kunisada_self_portrait.jpg" alt="Utagawa Hiroshige" class="artist-image">
+                        <div class="artist-info">
+                            <h3 class="artist-name">Utagawa Hiroshige</h3>
+                            <div class="artist-divider"></div>
+                            <p class="artist-period">1797-1858</p>
+                            <p class="artist-bio">
+                                Known as the "Artist of Rain, Snow, and Mist," Hiroshige was a master of atmospheric landscape prints. His series "Fifty-three Stations of the Tōkaidō" and "One Hundred Famous Views of Edo" showcase his extraordinary ability to capture seasonal changes and weather conditions.
+                            </p>
+                            <a href="#" class="artist-button">Explore Artist</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Artist 3 -->
+                    <div class="artist-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/MatsumotoShunsho-Utamaro-1788-cropped.jpg" alt="Kitagawa Utamaro" class="artist-image">
+                        <div class="artist-info">
+                            <h3 class="artist-name">Kitagawa Utamaro</h3>
+                            <div class="artist-divider"></div>
+                            <p class="artist-period">1753-1806</p>
+                            <p class="artist-bio">
+                                Celebrated for his exquisite portraits of women, Utamaro perfected the bijin-ga (beautiful women) genre. His intimate and psychologically nuanced depictions of courtesans and geisha reveal both their public personas and private emotions, often using innovative close-up compositions.
+                            </p>
+                            <a href="#" class="artist-button">Explore Artist</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Additional Artists -->
+            <section class="additional-artists">
+                <h2 class="section-title additional-title">Additional Artists</h2>
+                <div class="additional-grid">
+                    <!-- Additional Artist 1 -->
+                    <div class="additional-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Toshusai_Sharaku-_Otani_Oniji_III_as_the_Servant_Edobei.jpg/800px-Toshusai_Sharaku-_Otani_Oniji_III_as_the_Servant_Edobei.jpg" alt="Toshusai Sharaku" class="additional-image">
+                        <div class="additional-info">
+                            <h3 class="additional-name">Toshusai Sharaku</h3>
+                            <p class="additional-period">Active 1794-1795</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Artist 2 -->
+                    <div class="additional-card">
+                        <img src="https://m.media-amazon.com/images/I/71WQeKxIQKL._AC_UF1000,1000_QL80_.jpg" alt="Suzuki Harunobu" class="additional-image">
+                        <div class="additional-info">
+                            <h3 class="additional-name">Suzuki Harunobu</h3>
+                            <p class="additional-period">1725-1770</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Artist 3 -->
+                    <div class="additional-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Kuniyoshi_Utagawa%2C_Hero.jpg" alt="Utagawa Kuniyoshi" class="additional-image">
+                        <div class="additional-info">
+                            <h3 class="additional-name">Utagawa Kuniyoshi</h3>
+                            <p class="additional-period">1798-1861</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Artist 4 -->
+                    <div class="additional-card">
+                        <img src="https://smarthistory.org/wp-content/uploads/2021/03/JA062-scaled.jpg" alt="Katsukawa Shunshō" class="additional-image">
+                        <div class="additional-info">
+                            <h3 class="additional-name">Katsukawa Shunshō</h3>
+                            <p class="additional-period">1726-1792</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Collection Highlights -->
+            <section class="collection-highlights">
+                <h2 class="section-title highlights-title">Collection Highlights</h2>
+                <div class="highlights-slider">
+                    <!-- Highlight 1 -->
+                    <div class="highlight-card">
+                        <img src="https://i.pinimg.com/originals/25/9d/ba/259dba50beaf171fc79592a76ab4e0d2.jpg" alt="The Great Wave off Kanagawa" class="highlight-image">
+                        <div class="highlight-info">
+                            <h3 class="highlight-title">The Great Wave off Kanagawa</h3>
+                            <p class="highlight-artist">Katsushika Hokusai, c. 1830</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Highlight 2 -->
+                    <div class="highlight-card">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Hiroshige_-_Evening_Shower_at_Atake_and_the_Great_Bridge.jpg/1200px-Hiroshige_-_Evening_Shower_at_Atake_and_the_Great_Bridge.jpg" alt="Sudden Shower over Shin-Ōhashi Bridge" class="highlight-image">
+                        <div class="highlight-info">
+                            <h3 class="highlight-title">Sudden Shower over Shin-Ōhashi Bridge</h3>
+                            <p class="highlight-artist">Utagawa Hiroshige, 1857</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Highlight 3 -->
+                    <div class="highlight-card">
+                        <img src="https://collectionapi.metmuseum.org/api/collection/v1/iiif/55902/1947996/main-image" alt="Three Beauties of the
