@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
-
 const MuseumCatalogueExplorer = () => {
   const [activeViewMode, setActiveViewMode] = useState('grid');
   const [activeBrandIndex, setActiveBrandIndex] = useState(0);
   const [activeArtistIndex, setActiveArtistIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentArtworkIndex, setCurrentArtworkIndex] = useState(0);
-
-  // Brand data
   const brands = [
     { name: "AM Brant", image: "assets/images/ambrant.jpg" },
     { name: "Mughal Atelier", image: "assets/images/mughal.png" },
     { name: "Flemish Collection", image: "assets/images/flemish.png" }
   ];
-
-  // Artist data
   const artists = [
     {
       name: "Katsushika Hokusai",
@@ -35,8 +30,6 @@ const MuseumCatalogueExplorer = () => {
       description: "Celebrated for portraits of women"
     }
   ];
-
-  // Artwork data
   const artworks = [
     {
       src: 'assets/images/greatwaves.png',
@@ -75,39 +68,30 @@ const MuseumCatalogueExplorer = () => {
       link: '#'
     }
   ];
-
   const handleBrandClick = (index) => {
     setActiveBrandIndex(index);
   };
-
   const handleArtistClick = (index) => {
     setActiveArtistIndex(index);
   };
-
   const openModal = (index) => {
     setCurrentArtworkIndex(index);
     setModalVisible(true);
   };
-
   const closeModal = () => {
     setModalVisible(false);
   };
-
   const showPrevArtwork = () => {
     setCurrentArtworkIndex((currentArtworkIndex - 1 + artworks.length) % artworks.length);
   };
-
   const showNextArtwork = () => {
     setCurrentArtworkIndex((currentArtworkIndex + 1) % artworks.length);
   };
-
   const addToFavorites = () => {
     alert(`Added "${artworks[currentArtworkIndex].title}" to favorites!`);
   };
-
   return (
     <div className="bg-[#fcf6eb] text-[#bf9347] overflow-x-hidden min-h-screen">
-      {/* Header */}
       <header className="py-8 bg-[#fcf6eb] border-b border-[#bf934733]">
         <div className="max-w-[100rem] mx-auto px-10">
           <div className="flex justify-between items-center md:flex-row flex-col md:gap-0 gap-5">
@@ -125,11 +109,8 @@ const MuseumCatalogueExplorer = () => {
           </div>
         </div>
       </header>
-
-      {/* Main Section */}
       <section className="py-16">
         <div className="max-w-[100rem] mx-auto px-10">
-          {/* Breadcrumb */}
           <div className="flex items-center mb-8 font-light text-sm">
             <a href="#" className="opacity-70 no-underline transition-all duration-400 ease-out">Home</a>
             <span className="mx-2.5 text-[#bf9347]">›</span>
@@ -139,16 +120,12 @@ const MuseumCatalogueExplorer = () => {
             <span className="mx-2.5 text-[#bf9347]">›</span>
             <span className="font-normal opacity-100">{artists[activeArtistIndex].name}</span>
           </div>
-
-          {/* Page Heading */}
           <div className="mb-16">
             <h1 className="font-medium text-4xl mb-2.5">Catalogue Explorer</h1>
             <p className="font-light text-base opacity-70 max-w-xl">
-              Navigate through our curated brands, discover master artists, and explore their exceptional artworks representing the pinnacle of human creativity and craftsmanship.
+              Embark on an immersive journey through our meticulously curated ecosystem of distinguished brands, where you’ll engage with visionary master artists and their unparalleled portfolios. Discover bespoke artworks that exemplify the pinnacle of human creativity and craftsmanship, embodying cultural heritage, artistic excellence, and transformative inspiration.
             </p>
           </div>
-
-          {/* Brand Selection */}
           <div className="flex justify-between items-center mb-8">
             <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">Select Brand</h2>
           </div>
@@ -166,8 +143,6 @@ const MuseumCatalogueExplorer = () => {
               </div>
             ))}
           </div>
-
-          {/* Artist Selection */}
           <div className="flex justify-between items-center mb-8">
             <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">Japanese Master Artists</h2>
             <div className="flex gap-4">
@@ -202,8 +177,6 @@ const MuseumCatalogueExplorer = () => {
               </div>
             ))}
           </div>
-
-          {/* Artworks by Selected Artist */}
           <div className="flex justify-between items-center mb-8">
             <h2 className="font-medium text-3xl relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-[#bf9347]">
               Artworks by {artists[activeArtistIndex].name}
@@ -230,11 +203,8 @@ const MuseumCatalogueExplorer = () => {
               </div>
             ))}
           </div>
-
         </div>
       </section>
-
-      {/* Artwork Detail Modal */}
       {modalVisible && (
         <div
           className="fixed top-0 left-0 w-full h-full bg-[#00000099] flex items-center justify-center z-50"
@@ -303,5 +273,4 @@ const MuseumCatalogueExplorer = () => {
     </div>
   );
 };
-
 export default MuseumCatalogueExplorer;
