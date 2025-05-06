@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/museum/static/css/main.1ee2a9f0.css",
-    "main.js": "/museum/static/js/main.fba122f1.js",
+    "main.js": "/museum/static/js/main.0cb08ece.js",
     "index.html": "/museum/index.html",
     "main.1ee2a9f0.css.map": "/museum/static/css/main.1ee2a9f0.css.map",
-    "main.fba122f1.js.map": "/museum/static/js/main.fba122f1.js.map"
+    "main.0cb08ece.js.map": "/museum/static/js/main.0cb08ece.js.map"
   },
   "entrypoints": [
     "static/css/main.1ee2a9f0.css",
-    "static/js/main.fba122f1.js"
+    "static/js/main.0cb08ece.js"
   ]
 }
